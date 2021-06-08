@@ -153,15 +153,66 @@
 
 
         // 原生的promise
-        const promise = new Promise((resolve, reject) => {
+        // const promise = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve("成功")
+        //     }, 1000)
+        //     // resolve("成功")
+        // }).then().then(res => {
+        //     console.log('success', res)
+        // }, rej => {
+        //     console.log('error', rej)
+        // })
+        // 简易版本 
+        class myPromise {
+            constructor(callback) {
+                this.status = "pending"
+                this.successData = undefined
+                this.errerData = undefined
+
+                this.successCallbacks = []
+                this.errorCallbacks = []
+                const resolve = (value) => {
+                    if (this.status === "pending") {
+                        this.status = "resolve"
+                        this.successData = value
+                        this.successCallbacks.forEach(fn => fn())
+                    }
+                }
+                const reject = (value) => {
+                    this.status = "reject"
+                    this.errerData = value
+                    this.errorCallbacks.forEach(fn => fn())
+                }
+                try {
+                    callback(resolve, reject)
+                } catch (e) {
+                    reject(e)
+                }
+            }
+            then(resolveFunction, rejectFunction) {
+                if (this.status === "resolve") {
+                    resolveFunction(this.successData)
+                }
+                if (this.status === "reject") {
+                    rejectFunction(this.errerData)
+                }
+                if (this.status === "pending") {
+                    this.successCallbacks.push(() => {
+                        resolveFunction(this.successData)
+                    })
+                    this.errorCallbacks.push(() => {
+                        rejectFunction(this.errerData)
+                    })
+                }
+            }
+        }
+        const mypromise = new myPromise((resolve, reject) => {
             setTimeout(() => {
-                resolve("成功")
+                resolve("成功了")
             }, 1000)
-            // resolve("成功")
-        }).then().then(res => {
-            console.log('success', res)
-        }, rej => {
-            console.log('error', rej)
+        }).then(res => {
+            console.log(res)
         })
     </script>
 </body>
