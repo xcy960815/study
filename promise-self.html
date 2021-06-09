@@ -68,6 +68,25 @@
                 }
             }
         }
+
+
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("promise4-resolve-1000")
+            }, 1000)
+        }).then(res => {
+            console.log(res)
+        })
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject("promise4-reject-1000")
+            }, 1000)
+        }).then(res => {
+            console.log(res)
+        }, error => {
+            console.log(error)
+        })
+
         Promise.all = function (promiseList) {
             const resultList = []
             let resolveCount = 0
@@ -122,11 +141,15 @@
             }, 3000)
         })
 
-        // Promise.all([promise1, promise2, promise3]).then((result) => {
-        //     console.log("Promise.all-result", result)
-        // }, error => {
-        //     console.log("Promise.all-error", error)
-        // })
+
+
+        Promise.all([promise1, promise2, promise3]).then((result) => {
+            console.log("Promise.all-result", result)
+        }, error => {
+            console.log("Promise.all-error", error)
+        })
+
+
         Promise.race([promise1, promise2, promise3]).then(res => {
             console.log("promise-race-success", res)
         }, err => {
