@@ -172,18 +172,18 @@
 
         // 简易版本 
         class myPromise {
+            status = "pending"
+            successData = undefined
+            errerData = undefined
+            successCallbacks = []
+            errorCallbacks = []
             constructor(callback) {
-                this.status = "pending"
-                this.successData = undefined
-                this.errerData = undefined
 
-                this.successCallbacks = []
-                this.errorCallbacks = []
 
                 try {
                     callback(this.resolve.bind(this), this.reject.bind(this))
                 } catch (e) {
-                    reject(e)
+                    this.reject.bind(this)(e)
                 }
             }
             resolve(value) {
@@ -195,9 +195,12 @@
             }
 
             reject(value) {
-                this.status = "reject"
-                this.errerData = value
-                this.errorCallbacks.forEach(fn => fn())
+                if (this.status === "pending") {
+                    this.status = "reject"
+                    this.errerData = value
+                    this.errorCallbacks.forEach(fn => fn())
+                }
+
             }
 
             then(resolveFunction, rejectFunction) {
@@ -220,15 +223,18 @@
 
         myPromise.all = function (promiseList) {
             const resultList = []
-            let len = 0
+            let resolveLen = 0
             let hasErr = false
             return new myPromise((resolve, reject) => {
                 for (let i = 0; i < promiseList.length; i++) {
                     promiseList[i].then(data => {
+                        console.log("data", data)
                         resultList[i] = data
-                        len++
-                        len === promiseList.length && resolve(resultList)
+                        resolveLen++
+                        // 如果搜有的promise 都是执行的resolve 然后执行的promise 的resolve
+                        resolveLen === promiseList.length && resolve(resultList)
                     }, error => {
+                        console.log("error", error)
                         !hasErr && reject(error)
                         hasErr = true
                     })
@@ -252,93 +258,114 @@
                 }
             })
         }
-        const mypromise_1 = new myPromise((resolve, reject) => {
-            setTimeout(() => {
-                resolve("成功了")
-            }, 1000)
-        })
+        // const mypromise_1 = new myPromise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve("成功了")
+        //     }, 1000)
+        // })
         const mypromise_2 = new myPromise((resolve, reject) => {
             setTimeout(() => {
                 reject("失败了")
             }, 3000)
-        })
-
-        myPromise.all([mypromise_1, mypromise_2]).then(res => {
-            console.log("mypromise-all-success", res)
-        }, error => {
-            console.log("mypromise-all-error", error)
-        })
-        myPromise.race([mypromise_1, mypromise_2]).then(res => {
-            console.log("mypromise-race-success", res)
-        }, error => {
-            console.log("mypromise-race-error", error)
+        }).then(res => { }, err => {
+            console.log("promise2", err)
         })
 
 
-
-        class Promise2 {
-            succeed = null
-            fail = null
-            state = 'pending'
-
-            constructor(fn) {
-                fn(this.resolve.bind(this), this.reject.bind(this))
-            }
-
-            resolve(result) {
-                setTimeout(() => {
-                    this.state = 'fulfilled'
-                    this.succeed(result)
-                })
-            }
-
-            reject(reason) {
-                setTimeout(() => {
-                    this.state = 'rejected'
-                    this.fail(reason)
-                })
-            }
-
-            then(succeed, fail) {
-                this.succeed = succeed
-                this.fail = fail
-            }
-        }
-        Promise2.all = function (arrP) {
-            const list = []
-            let len = 0
-            let hasErr = false
-            return new Promise2((resolve, reject) => {
-                for (let i = 0; i < arrP.length; i++) {
-                    arrP[i].then(data => {
-                        list[i] = data
-                        len++
-                        len === arrP.length && resolve(list)
-                    }, error => {
-                        !hasErr && reject(error)
-                        hasErr = true
-                    })
-                }
-            })
-        }
-        const promise2_1 = new Promise2((resolve, reject) => {
+        // myPromise.all([mypromise_1, mypromise_2]).then(res => {
+        //     console.log("mypromise-all-success", res)
+        // }, error => {
+        //     console.log("mypromise-all-error", error)
+        // })
+        // myPromise.race([mypromise_1, mypromise_2]).then(res => {
+        //     console.log("mypromise-race-success", res)
+        // }, error => {
+        //     console.log("mypromise-race-error", error)
+        // })
+        const promise1 = new myPromise((resolve, reject) => {
             setTimeout(() => {
                 resolve("成功了")
-
+            }, 2000)
+        })
+        const promise2 = new myPromise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了")
             }, 1000)
         })
-        const promise2_2 = new Promise2((resolve, reject) => {
+
+        const promise3 = new myPromise((resolve, reject) => {
             setTimeout(() => {
                 reject("失败了")
             }, 3000)
         })
-
-        Promise2.all([promise2_1, promise2_2]).then(res => {
-            console.log("Promise2.all-success", res)
+        myPromise.all([promise1, promise2, promise3]).then(res => {
+            console.log("mypromise-all-success", res)
         }, error => {
-            console.log("Promise2.all-error", error)
+            console.log("mypromise-all-error", error)
         })
 
+        // class Promise2 {
+        //     succeed = null
+        //     fail = null
+        //     state = 'pending'
+
+        //     constructor(fn) {
+        //         fn(this.resolve.bind(this), this.reject.bind(this))
+        //     }
+
+        //     resolve(result) {
+        //         setTimeout(() => {
+        //             this.state = 'fulfilled'
+        //             this.succeed(result)
+        //         })
+        //     }
+
+        //     reject(reason) {
+        //         setTimeout(() => {
+        //             this.state = 'rejected'
+        //             this.fail(reason)
+        //         })
+        //     }
+
+        //     then(succeed, fail) {
+        //         this.succeed = succeed
+        //         this.fail = fail
+        //     }
+        // }
+        // Promise2.all = function (arrP) {
+        //     const list = []
+        //     let len = 0
+        //     let hasErr = false
+        //     return new Promise2((resolve, reject) => {
+        //         for (let i = 0; i < arrP.length; i++) {
+        //             arrP[i].then(data => {
+        //                 list[i] = data
+        //                 len++
+        //                 len === arrP.length && resolve(list)
+        //             }, error => {
+        //                 !hasErr && reject(error)
+        //                 hasErr = true
+        //             })
+        //         }
+        //     })
+        // }
+        // const promise2_1 = new Promise2((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve("成功了")
+
+        //     }, 1000)
+        // })
+        // const promise2_2 = new Promise2((resolve, reject) => {
+        //     setTimeout(() => {
+        //         reject("失败了")
+        //     }, 3000)
+        // })
+
+        // Promise2.all([promise2_1, promise2_2]).then(res => {
+        //     console.log("Promise2.all-success", res)
+        // }, error => {
+        //     console.log("Promise2.all-error", error)
+        // })
 
 
 
