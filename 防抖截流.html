@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .scroll-box {
+            height: 1000px;
+            background: chartreuse
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-box"></div>
+    <script>
+        // 防抖
+        const debounce = (callback, time) => {
+            time = time ? time : 300
+            let timer = null
+            const _this = this
+            return function () {
+                if (timer) {
+                    window.clearTimeout(timer)
+                }
+                timer = setTimeout(() => {
+                    callback.apply(_this, arguments)
+                }, timer)
+            }
+        }
+        const showTop = function (params) {
+            const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            console.log('滚动条位置：' + scrollTop);
+            console.log('params', params)
+        }
+        const debounceFunc = debounce(showTop, 500)
+
+        window.onscroll = function (event) {
+            debounceFunc(event)
+        }
+
+        // 截流 setTime
+        // const throttle = (fn, delay) => {
+        //     delay = delay ? delay : 300
+        //     let timer
+        //     return function () {
+        //         const args = arguments;
+        //         console.log("timer前", timer)
+        //         if (timer) return
+        //         timer = setTimeout(() => {
+        //             fn.apply(this, args);
+        //             console.log("里面前", timer)
+        //             timer = null; // 在delay后执行完fn之后清空timer，此时timer为假，throttle触发可以进入计时器
+        //             console.log("里面后", timer)
+        //         }, delay)
+        //         console.log("timer后", timer)
+        //     }
+        // }
+        // 截流 时间戳
+        const throttle = (fn, delay) => {
+            let previous = 0;
+            // 使用闭包返回一个函数并且用到闭包函数外面的变量previous
+            return function () {
+                const _this = this;
+                const args = arguments;
+                const now = new Date().getTime();
+                if (now - previous > delay) {
+                    fn.apply(_this, args);
+                    previous = now; //当方法执行完成之后 才更新当前执行的时间戳 + delay 就是下次执行的方法的时间戳
+                }
+            }
+        }
+        function testThrottle(e, content) {
+            console.log(e, content);
+        }
+        const testThrottleFn = throttle(testThrottle, 300); // 节流函数
+        document.onmousemove = function (e) {
+            testThrottleFn(e, 'throttle'); // 给节流函数传参
+        }
+    </script>
+</body>
+
+</html>
