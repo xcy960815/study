@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 手写unshift
+        /**
+         * unshift 可以传递很多参数 向数组前面添加数据 
+         * 返回添加数据之后的数组长度
+        */
+        Array.prototype._unshift = function () {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not array")
+            const arrayLength = array.length
+            const arg = [...arguments]
+            if (!arg || !arg.length) return arrayLength
+            // 将原数组中的元素 向后移动位置
+            for (let index = 0; index < arrayLength; index++) {
+                array[arg.length + index] = array[index]
+            }
+            // 将参数里面的数据添加到数组前面
+            for (let index = 0; index < arg.length; index++) {
+                array[index] = arg[index]
+            }
+            return array.length
+
+        }
+        const array = [5, 6, 7]
+        const unshiftValue = array._unshift(1, 2, 3, 4)
+        console.log(unshiftValue, array)
+
+
+        // 突发奇想关于this的问题
+        // const func1 = () => {
+        //     console.log("func1", this)
+        // }
+        // const func2 = function () {
+        //     console.log("func2", this)
+        // }
+        // const obj = {
+        //     func1,
+        //     func2,
+        //     func3: function () {
+        //         const func = () => {
+        //             console.log("this", this)
+        //         }
+        //         func()
+        //     },
+        //     func4: function () {
+        //         func1.apply(this)
+        //     }
+        // }
+        // obj.func1()
+        // obj.func2()
+        // obj.func3()
+        // obj.func4()
+    </script>
+</body>
+
+</html>

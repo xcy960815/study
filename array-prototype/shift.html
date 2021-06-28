@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // 手写shift
+        /**
+         * shift 方法
+         * 删除数组中最前一位元素
+         * 返回被删除的元素
+        */
+        Array.prototype._shift = function () {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not array")
+            if (array.length === 0) return undefined
+            // 先记录第一位元素
+            const firstValue = array[0]
+            // 将前面的元素赋值成后面的元素 [1,2,3,4,5] => [2,3,4,5,undefined]
+            for (let index = 0; index < array.length; index++) {
+                array[index] = array[index + 1]
+            }
+            array.length--
+            return firstValue
+
+        }
+        const array = [1, 2, 3, 4, 5]
+        console.log('array shift', array, array._shift())
+    </script>
+</body>
+
+</html>

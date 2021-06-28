@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 手写push
+        Array.prototype._push = function () {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not Array")
+            const arrarlength = array.length
+            const arg = arguments
+            if (!arg.length || !arg) {
+                return arrarlength
+            }
+            for (let i = 0; i < arg.length; i++) {
+                const value = arg[i]
+                array[i + arrarlength] = value
+            }
+            return array.length
+        }
+        const arr = []
+        const pushValue = arr._push({ name: "xuchongyu" }, 1)
+        console.log(arr, pushValue)
+    </script>
+</body>
+
+</html>

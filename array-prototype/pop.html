@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 手写pop 
+        /**
+         * pop 删除数组中最后一位元素 
+         * 返回被删除的元素
+        */
+        Array.prototype._pop = function () {
+            const array = this
+            if (!Array.isArray(array)) {
+                throw new Error("not array")
+            }
+            const arrayLength = array.length
+            if (arrayLength === 0) return
+            const lastValue = array[arrayLength - 1]
+            array.length--
+            return lastValue
+        }
+        const array = [1, 2, 3, 4, 5]
+        const popValue = array._pop()
+        console.log(popValue, array)
+    </script>
+</body>
+
+</html>
