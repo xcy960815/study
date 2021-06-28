@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /** splice
+         * 1.有三个功能，删除、替换、插入，根据参数不同来进行操作
+         * 2.如果是插入或替换，只需用替换元素长度减去删除的个数即可得出向后移动的位置数，把插入替换的元素在移动出空缺的位置上对号入座；
+         *   如果是删除，则从起始下标与删除个数之和作为向前移动的开始下标，向前移动删除个数个位置
+         * 3.位置查询，如果第一个参数是正数，则是从前往后执行，如果是负数，则是从后往前执行
+         * 4.改变原数组，返回删除的值组成的数组
+        */
+        Array.prototype._splice = function () {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not an array")
+            const arg = [...arguments]
+            if (arg.length === 0) return []
+            const start = arg[0]
+            const adeleteCount = arg[1]
+            const params = arg[2]
+        }
+
+    </script>
+</body>
+
+</html>

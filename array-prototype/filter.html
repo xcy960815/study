@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /** filter
+         * 1.接收一个函数参数和一个函数执行作用域的参数（可选），参数函数也接受3个参数，分别是当前项值，当前项索引（可选），当前数组（可选）
+         * 2.执行参数函数，默认执行环境为window，把参数函数返回为true的项push到一个新的数组中，最后把这个新的数组返回到外部
+         */
+        Array.prototype._filter = function (callback, scope) {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not array")
+            if (typeof callback !== "function") throw new Error("not function")
+            if (array.length === 0) return
+            scope = scope ? scope : window
+            const resultList = []
+            for (let index = 0; index < array.length; index++) {
+                const value = array[index]
+                const result = callback.call(scope, value, index, array)
+                if (result) {
+                    resultList.push(value)
+                }
+
+            }
+            return resultList
+        }
+
+
+        console.log(new Array(1, 2, 3, 4, 5, 6, 7)._filter((item, index, array) => {
+            return index > 0
+        }))
+    </script>
+</body>
+
+</html>
