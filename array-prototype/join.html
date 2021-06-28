@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Array.prototype._join = function (point) {
+            point = point ? point : ","
+
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not an array")
+            let strContent = ""
+            if (!array || !array.length) return strContent
+            for (let index = 0; index < array.length; index++) {
+                const value = array[index]
+                if (index === array.length - 1) {
+                    strContent += value
+                }
+                else {
+                    strContent += value + point
+                }
+            }
+
+            return strContent
+        }
+
+        // console.log([1, 2, 3, [4], [[[[[[[[[5]]]]]]]]]].join())
+        console.log([1, 2, 3, [4], [[[[[[[[[5]]]]]]]]]]._join("."))
+    </script>
+</body>
+
+</html>

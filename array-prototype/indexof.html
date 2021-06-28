@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         *  1.接收两个参数分别为查找的元素和起始位置，起始位置可选，默认从第一项开始查找
+         *  2.遍历原数组，用全等去匹配每一项，如果匹配成功就返回当前元素下标，如果一直没匹配成功，则返回-1
+         */
+        Array.prototype._indexOf = function (element, startIndex) {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not array")
+            startIndex = startIndex ? startIndex : 0
+            let currentIndex = 0
+            for (let index = startIndex; index < array.length; index++) {
+                const value = array[index]
+                if (value === element) {
+                    currentIndex = index
+                    break
+                } else {
+                    currentIndex = -1
+                }
+            }
+            return currentIndex
+
+        }
+        console.log([1, 2, 3, 4]._indexOf(2))
+    </script>
+</body>
+
+</html>
