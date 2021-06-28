@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * isArray 判断是不是 数组
+        */
+        Array.prototype._isArray = function (array) {
+            if (Object.prototype.toString.call(array) === '[object Array]') {
+                return true
+            }
+            return false
+        }
+        console.log(Array.isArray([]))
+        console.log(Array.isArray({}))
+        console.log(new Array())
+        console.log(new Array()._isArray({}))
+        console.log(new Array()._isArray([]))
+    </script>
+</body>
+
+</html>

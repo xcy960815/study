@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 手写concat 合并数组
+        /**
+         * concat 合并数组
+         * 遇到数组 就合并数组 只做一层合并
+        */
+
+        Array.prototype._concat = function () {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not array")
+            const arg = [...arguments]
+            if (!arg || !arg.length) {
+                return array
+            }
+            // 记录 原始数组的长度
+            let arrayLength = array.length
+            // 循环参数
+            for (let index = 0; index < arg.length; index++) {
+                const value = arg[index]
+                if (Array.isArray(value)) {
+                    for (let j = 0; j < value.length; j++) {
+                        const jValue = value[j]
+                        array[arrayLength++] = jValue
+                    }
+                } else {
+
+                    array[arrayLength++] = value
+                }
+            }
+            return array
+        }
+        console.log([0]._concat([1, 2, 3], 4, [5, [6]]))
+        console.log([0].concat([1, 2, 3], 4, [5, [6]]))
+
+    </script>
+</body>
+
+</html>
