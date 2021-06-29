@@ -10,6 +10,10 @@
 
 <body>
     <script>
+        /**
+         * 待定 有问题
+        */
+
         /** splice
          * 1.有三个功能，删除、替换、插入，根据参数不同来进行操作
          * 2.如果是插入或替换，只需用替换元素长度减去删除的个数即可得出向后移动的位置数，把插入替换的元素在移动出空缺的位置上对号入座；
@@ -19,14 +23,75 @@
         */
         Array.prototype._splice = function () {
             const array = this
-            if (!Array.isArray(array)) throw new Error("not an array")
+            if (!Array.isArray(array)) throw new Error('not Array')
             const arg = [...arguments]
+            // 如果没有传递参数 直接返回一个空数组
             if (arg.length === 0) return []
-            const start = arg[0]
-            const adeleteCount = arg[1]
-            const params = arg[2]
+            // 数组的长度
+            let arrayLength = array.length
+
+            // 处理第一个参数
+            let start //起始下标
+            // 如果传入的起始下标小于零，就从末尾倒数，如果下标在倒数时超过了数组长度，则直接设为0
+            if (arg[0] < 0) {
+                start = arrayLength + arg[0]
+                if (start < 0) start = 0
+            } else {
+                start = arg[0]
+            }
+
+            // 第二个参数，删除的个数
+            let deleteCount = arg[1]
+            // 如果传入的删除个数大于起始位置到末尾位置之间元素的个数，那就从起始位置开始删除 删除到数组中的最后一位
+            if (deleteCount > arrayLength - start) {
+                deleteCount = arrayLength - start
+            }
+            // 被删除的元素组成的数组
+            const result = []
+            // 返回被删除的数据
+            for (let i = start; i < start + deleteCount; i++) {
+                const value = array[i]
+                // 要返回删除的项
+                result.push(value)
+            }
+
+            // 第三个及以后的参数，要添加或替换到原数组的元素，这里直接用了slice，可以用for挨个遍历
+            const params = Array.prototype.slice.call(arguments, 2)
+            // 处理第三到第n个参数相关的数据  第三个参数存在，则是插入或替换
+            if (params && params.length > 0) {
+                // 如果添加的参数的个数 大于 删除的个数 那就是数组后移 params.length - deleteCount 个位置 否则 就是0
+                const moveBack = params.length - deleteCount < 0 ? 0 : params.length - deleteCount // 防止覆盖起始下标之前的元素
+                for (let i = start; i < arrayLength; i++) {
+                    // 从start开始所有元素向后移 moveBack 个位置
+                    array[i + moveBack] = array[i]
+                }
+                console.log("array1", array)
+                // 从起始位置开始将插入或替换的元素对号入座
+                for (let j = 0; j < params.length; j++) {
+                    array[start++] = params[j]
+                }
+                console.log("array2", array)
+            } else {
+                // 如果没有第三个参数那么就是删除，后面的元素往前移 deleteCount 个位置，length - deleteCount
+                for (let i = start; i < arrayLength; i++) {
+                    array[i] = array[i + deleteCount]
+                }
+                array.length = arrayLength - deleteCount
+            }
+            return result;
         }
 
+        // test
+        const array = [1, 2, 3]
+        // 正确：原来的数组: (2) [1, 4] 截取的数组: (2) [2, 3]
+        // 错误：原来的数组: (3) [1, 4, 3] 截取的数组: (2) [2, 3]
+        const newArray1 = array._splice(1, 2, 4)
+
+        // const newArray2 = array.splice(0, 1)
+        // const newArray3 = array.splice(0, 1, 4)
+        console.log('原来的数组:', array, '截取的数组:', newArray1)
+        // console.log(array, newArray2)
+        // console.log(array, newArray3)
     </script>
 </body>
 

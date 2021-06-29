@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        /**
+         * 1.不接收参数
+         * 2.循环一次，循环长度为原数组长度一半，两端位置互换
+         */
+        Array.prototype._reverse = function () {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not an array")
+            const arrayLength = array.length
+            if (arrayLength === 0) return []
+            for (let index = 0; index < arrayLength / 2; index++) {
+                // const value = array[index]
+                // array[index] = array[arrayLength - 1 - index]
+                // array[arrayLength - 1 - index] = value
+                // 快速写法
+                // 下标0的item 对应的 下标是3 下标1的item 对应的下标是2
+                [array[index], array[arrayLength - 1 - index]] = [array[arrayLength - 1 - index], array[index]]
+            }
+            return array
+        }
+        const array = [1, 2, 3, 4]
+        console.log('原生方法', array, array.reverse())
+        console.log('改造方法', array, array._reverse())
+    </script>
+</body>
+
+</html>

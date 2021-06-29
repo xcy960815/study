@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /** slice
+         * 1.接收两个参数，第二个参数可选，如果不传第二个参数，默认原数组长度，即一直截取到末尾
+         * 2.从第一个参数开始遍历原数组，直到结束位置时结束遍历，把遍历的每一项push到一个新的数组中，返回这个新数组
+         * 3.如果第一个参数是负数，则起始位置为数组长度 + 第一个参数。结束位置的下标不能小于或等于起始位置下标，否则返回空数组
+         */
+        Array.prototype._slice = function (start, end) {
+            const array = this
+            if (!Array.isArray(array)) throw new Error("not array")
+            if (array.length === 0) return []
+            start = start < 0 ? array.length + start : start
+            end = end < 0 ? array.length + end : end
+            const result = []
+            for (let index = start; index < end; index++) {
+                const value = array[index]
+                result.push(value)
+            }
+            return result
+        }
+        const array = [1, 2, 3]
+        const sliceValue = array._slice(1, -1)
+        console.log("array", array, "sliceValue", sliceValue)
+    </script>
+</body>
+
+</html>
