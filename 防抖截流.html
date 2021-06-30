@@ -23,28 +23,29 @@
     <div class="scroll-box"></div>
     <script>
         // 防抖
-        const debounce = (callback, time) => {
-            time = time ? time : 300
-            let timer = null
-            const _this = this
+        const debounce = (callback, delay) => {
+            delay = delay ? delay : 300
+            let timer
             return function () {
+                const _this = this
                 if (timer) {
                     window.clearTimeout(timer)
                 }
                 timer = setTimeout(() => {
                     callback.apply(_this, arguments)
-                }, timer)
+                }, delay)
             }
         }
         const showTop = function (params) {
             const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
             console.log('滚动条位置：' + scrollTop);
-            console.log('params', params)
+
         }
         const debounceFunc = debounce(showTop, 500)
 
         window.onscroll = function (event) {
             debounceFunc(event)
+
         }
 
         // 截流 setTime
@@ -53,23 +54,20 @@
         //     let timer
         //     return function () {
         //         const args = arguments;
-        //         console.log("timer前", timer)
         //         if (timer) return
         //         timer = setTimeout(() => {
         //             fn.apply(this, args);
-        //             console.log("里面前", timer)
         //             timer = null; // 在delay后执行完fn之后清空timer，此时timer为假，throttle触发可以进入计时器
-        //             console.log("里面后", timer)
         //         }, delay)
-        //         console.log("timer后", timer)
         //     }
         // }
         // 截流 时间戳
         const throttle = (fn, delay) => {
-            let previous = 0;
             // 使用闭包返回一个函数并且用到闭包函数外面的变量previous
+            let previous = 0;
+            const _this = this;
             return function () {
-                const _this = this;
+
                 const args = arguments;
                 const now = new Date().getTime();
                 if (now - previous > delay) {
