@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        // 黑马视频 https://www.bilibili.com/video/BV1Hp4y1Y7h7?p=2&spm_id_from=pageDriver
+
+        // https://blog.csdn.net/u012925833/article/details/89306184 宏任务 微任务必看
+
+        // demo1 在主线程上添加宏任务与微任务
+        // 执行顺序：主线程 => 主线程上创建的微任务 => 主线程上创建的宏任务
+        // console.log('-------start--------');
+
+        // setTimeout(() => {
+        //     console.log('setTimeout');  // 将回调代码放入另一个宏任务队列
+        // }, 0);
+
+        // new Promise((resolve, reject) => {
+        //     for (let i = 0; i < 5; i++) {
+        //         console.log(i);
+        //     }
+        //     resolve()
+        // }).then(() => {
+        //     console.log('Promise实例成功回调执行'); // 将回调代码放入微任务队列
+        // })
+
+        // console.log('-------end--------');
+        // start =》0 =》1 =》2 =》3 =》4 end =》Promise实例成功回调执行=》setTimeout
+
+
+
+
+        // demo2 在微任务中创建微任务
+        // 执行顺序：主线程 => 主线程上创建的微任务1 => 微任务1上创建的微任务2 => 主线程上创建的宏任务
+        // setTimeout(_ => console.log(4))
+
+        // new Promise(resolve => {
+        //     resolve()
+        //     console.log(1)
+        // }).then(_ => {
+        //     console.log(3)
+        //     Promise.resolve().then(_ => {
+        //         console.log('before timeout')
+        //     }).then(_ => {
+        //         Promise.resolve().then(_ => {
+        //             console.log('also before timeout')
+        //         })
+        //     })
+        // })
+
+        // console.log(2)
+        // 1=》2=》3=》before timeout =》also before timeout =》4
+
+
+
+        // demo3 宏任务中创建微任务
+        // 宏任务队列中创建的微任务，会打断当前宏任务队列的执行。
+
+        // 执行顺序：主线程（宏任务队列 1）=> 宏任务队列 2.1 => 微任务队列 1（打断宏任务队列 2）=>宏任务队列 2.2 => 宏任务队列 3
+        // setTimeout(() => {
+        //     // 宏任务队列 2.1
+        //     console.log('timer_1');
+        //     setTimeout(() => {
+        //         // 宏任务队列 3
+        //         console.log('timer_3')
+        //     }, 0)
+        //     new Promise(resolve => {
+        //         resolve()
+        //         console.log('new promise')
+        //     }).then(() => {
+        //         // 微任务队列 1
+        //         console.log('promise then')
+        //     })
+        // }, 0)
+
+        // setTimeout(() => {
+        //     // 宏任务队列 2.2
+        //     console.log('timer_2')
+        // }, 0)
+        // console.log('========== Sync queue ==========')
+        // ========== Sync queue ========== =》timer_1 =》new promise =》 promise then =》timer_2 =》timer_3
+
+
+
+        // demo4 微任务队列中创建的宏任务
+        // 执行顺序：主线程 => 主线程上创建的微任务 => 主线程上创建的宏任务 => 微任务中创建的宏任务
+
+        // 异步宏任务队列只有一个，当在微任务中创建一个宏任务之后，他会被追加到异步宏任务队列上（跟主线程创建的异步宏任务队列是同一个队列）
+        // 宏任务1
+        // new Promise((resolve) => {
+        //     console.log('new Promise(macro task 1)');
+        //     resolve();
+        // }).then(() => {
+        //     // 微任务1
+        //     console.log('micro task 1');
+        //     setTimeout(() => {
+        //         // 宏任务3
+        //         console.log('macro task 3');
+        //     }, 0)
+        // })
+
+        // setTimeout(() => {
+        //     // 宏任务2
+        //     console.log('macro task 2');
+        // }, 1000)
+        // new Promise(macro task 1)=》 Sync queue(macro task 1) =》 micro task 1=》 macro task 3 =》macro task 2
+
+        // setTimeout(() => {
+        //     // 宏任务2
+        //     console.log('macro task 2');
+        // }, 0)
+        // // new Promise(macro task 1)=》 Sync queue(macro task 1) =》 micro task 1=》 macro task 2 =》macro task 3
+        // console.log('========== Sync queue(macro task 1) ==========');
+
+        // 总结：
+        // 微任务队列优先于宏任务队列执行，
+        // 微任务队列上创建的宏任务会被后添加到当前宏任务队列的尾端，
+        // 微任务队列中创建的微任务会被添加到微任务队列的尾端。
+        // 只要微任务队列中还有任务，宏任务队列就只会等待微任务队列执行完毕后再执行。
+
+        // 综合
+        console.log('======== main task start ========');
+        new Promise(resolve => {
+            console.log('create micro task 1');
+            resolve();
+        }).then(() => {
+            console.log('micro task 1 callback');
+            setTimeout(() => {
+                console.log('macro task 3 callback');
+            }, 0);
+        })
+
+        console.log('create macro task 2');
+        setTimeout(() => {
+            console.log('macro task 2 callback');
+            new Promise(resolve => {
+                console.log('create micro task 3');
+                resolve();
+            }).then(() => {
+                console.log('micro task 3 callback');
+            })
+            console.log('create macro task 4');
+            setTimeout(() => {
+                console.log('macro task 4 callback');
+            }, 0);
+        }, 0);
+
+        new Promise(resolve => {
+            console.log('create micro task 2');
+            resolve();
+        }).then(() => {
+            console.log('micro task 2 callback');
+        })
+
+        console.log('======== main task end ========');
+
+        // main task start 
+        // create micro task 1
+        // create macro task 2
+        // create micro task 2
+        // main task end
+        // micro task 1 callback
+        // micro task 2 callback
+        // create micro task 3
+        // create macro task 4
+        // micro task 3 callback
+        // macro task 3 callback
+        // macro task 4 callback
+    </script>
+</body>
+
+</html>
