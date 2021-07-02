@@ -29,38 +29,44 @@
                 }
                 // callback(this.resolve.bind(this), this.reject.bind(this))
             }
+
             resolve(value) {
 
                 if (this.status === PENDING) {
                     this.status = RESOLVE
                     this.successData = value
-                    this.resolveCallbacks.forEach(fn => fn())
+                    setTimeout(() => {
+                        this.resolveCallbacks.forEach(fn => fn())
+                    })
                 }
             }
+
             reject(value) {
                 if (this.status === PENDING) {
-
                     this.status = REJECT
                     this.errorData = value
                     setTimeout(() => {
                         this.rejectCallbacks.forEach(fn => fn())
                     })
-
                 }
 
             }
             then(resolveFunction, rejectFunction) {
+
                 if (this.status === RESOLVE) {
                     resolveFunction(this.successData)
                 }
+
                 if (this.status === REJECT) {
                     rejectFunction(this.errorData)
                 }
+
                 if (this.status === PENDING) {
 
                     this.resolveCallbacks.push(() => {
                         resolveFunction(this.successData)
                     })
+
                     this.rejectCallbacks.push(() => {
                         rejectFunction(this.errorData)
                     })
@@ -77,6 +83,8 @@
         }).then(res => {
             console.log(res)
         })
+
+
         new Promise((resolve, reject) => {
             setTimeout(() => {
                 reject("promise4-reject-1000")
@@ -124,11 +132,15 @@
                 }
             })
         }
+
+
         const promise1 = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve("成功了-2000")
             }, 2000)
         })
+
+
         const promise2 = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve("成功了-1000")

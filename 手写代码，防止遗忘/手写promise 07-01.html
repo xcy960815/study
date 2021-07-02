@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写promise</title>
+</head>
+
+<body>
+    <script>
+
+
+        class Promise {
+            resolveCallbacks = []
+            rejectCallbacks = []
+            status = "pending"
+            resolveValue = undefined
+            rejectValue = undefined
+            // 接收一个回调参数 callback callback 里面有两个参数 又是两个方法
+            constructor(callback) {
+                // 马上执行这个callback 返回 resolve 、reject 方法
+                callback(this.resolve.bind(this), this.reject.bind(this))
+            }
+
+            resolve(value) {
+
+                if (this.status == "pending") {
+                    this.status = "resolve"
+                    this.resolveValue = value
+                    this.resolveCallbacks.forEach(func => func())
+                }
+            }
+
+            reject(value) {
+                if (this.status == "pending") {
+                    this.status = "reject"
+                    this.rejectValue = value
+                    this.rejectCallbacks.forEach(func => func())
+                }
+            }
+
+            then(resolveFunction, rejectFunction) {
+
+                if (this.status === "resolve") {
+                    resolveFunction(this.resolveValue)
+                }
+                if (this.status === "reject") {
+                    rejectFunction(this.rejectValue)
+                }
+
+                if (this.status == "pending") {
+                    this.resolveCallbacks.push(() => resolveFunction(this.resolveValue))
+                    this.rejectCallbacks.push(() => rejectFunction(this.rejectValue))
+                }
+            }
+        }
+        // 如果全部完成 才能算完成
+        Promise.all = function (promiseList) {
+            const resultList = []
+            // 记录多少次resolve
+            let resolveCount = 0
+            const promiseListLen = promiseList.length
+            let hasError = false
+            return new Promise((resolve, reject) => {
+                for (let index = 0; index < promiseList.length; index++) {
+                    const premise = promiseList[index]
+                    premise.then(data => {
+                        // 保存结果
+                        resultList[index] = data
+                        resolveCount++
+                        if (resolveCount === promiseListLen) {
+                            resolve(resultList)
+                        }
+                    }, error => {
+                        if (!hasError) {
+                            reject(error)
+                            hasError = true
+                        }
+
+                    })
+                }
+            })
+        }
+        Promise.race = function (promiseList) {
+            let hasError = false
+            let hasSuccess = false
+            return new Promise((resolve, reject) => {
+                for (let index = 0; index < promiseList.length; index++) {
+                    const promise = promiseList[index]
+                    promise.then(res => {
+                        if (!hasError && !hasSuccess) {
+                            resolve(res)
+                            hasSuccess = true
+                        }
+                    }, rej => {
+                        if (!hasError && !hasSuccess) {
+                            reject(rej)
+                            hasError = true
+                        }
+                    })
+                }
+            })
+
+        }
+        // new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         reject(123)
+        //     }, 1000)
+        // }).then((val) => {
+        //     console.log("val", val)
+        // }, (err) => {
+        //     console.log("err", err)
+        // })
+        const promise1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-2000")
+            }, 2000)
+        })
+
+
+        const promise2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-1000")
+            }, 1000)
+        })
+
+        const promise3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-3000")
+            }, 3000)
+        })
+
+
+
+        // Promise.all([promise1, promise2, promise3]).then((result) => {
+        //     console.log("Promise.all-result", result)
+        // }, error => {
+        //     console.log("Promise.all-error", error)
+        // })
+
+        Promise.race([promise1, promise2, promise3])
+            .then(res => {
+                console.log("promise-race-success", res)
+            }, err => {
+                console.log("promise-race-error", err)
+            })
+
+
+    </script>
+</body>
+
+</html>
