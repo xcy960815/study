@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Promise {
+            resolveValue = undefined;
+            rejectValue = undefined;
+            status = "pending"
+            resolveCallbacks = []
+            rejectCallbacks = []
+            constructor(callback) {
+                // console.log(this)
+                callback(this.resolve.bind(this), this.reject.bind(this))
+            }
+            resolve(value) {
+                if (this.status == "pending") {
+                    this.status = "resolve"
+                    this.resolveValue = value
+                    setTimeout(() => {
+                        this.resolveCallbacks.forEach(fn => fn(), 0)
+                    })
+
+                }
+            }
+            reject(value) {
+                if (this.status == "pending") {
+                    this.status = "reject"
+                    this.rejectValue = value
+                    setTimeout(() => {
+                        this.rejectCallbacks.forEach(fn => fn())
+                    }, 0)
+
+                }
+            }
+            then(resolveFunction, rejectFunction) {
+                if (this.status === "resolve") {
+                    resolveFunction(this.resolveValue)
+                }
+                if (this.status === "reject") {
+                    rejectFunction(this.rejectValue)
+                }
+                if (this.status === "pending") {
+                    this.resolveCallbacks.push(() => resolveFunction(this.resolveValue))
+                    this.rejectCallbacks.push(() => rejectFunction(this.rejectValue))
+                }
+            }
+        }
+        Promise.all = function (promiseList) {
+            const result = []
+            let successCount = 0
+            return new Promise((resolve, reject) => {
+                for (let index = 0; index < promiseList.length; index++) {
+                    const premise = promiseList[index]
+                    premise.then((data) => {
+                        result[index] = data
+                        successCount++
+                        if (successCount === promiseList.length) resolve(result)
+                    }, (data) => {
+                        reject(data)
+                    })
+                }
+            })
+        }
+
+        Promise.race = function (promiseList) {
+            let isResolved = false
+            let isRejected = false
+            return new Promise((resolve, reject) => {
+                for (let index = 0; index < promiseList.length; index++) {
+                    const premise = promiseList[index]
+                    premise.then((resolveValue) => {
+                        if (!isRejected && !isResolved) {
+                            resolve(resolveValue)
+                            isResolved = true
+                        }
+                    }, rejectValue => {
+                        if (!isRejected && !isResolved) {
+                            reject(rejectValue)
+                            isRejected = true
+                        }
+                    })
+                }
+            })
+        }
+        // new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         reject(123)
+        //     }, 1000)
+        // }).then((resolveValue) => {
+        //     console.log(resolveValue)
+        // }, (rejectValue) => {
+        //     console.error(rejectValue)
+        // })
+
+        const promise1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-2000")
+            }, 2000)
+        })
+
+
+        const promise2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-1000")
+            }, 1000)
+        })
+
+        const promise3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-3000")
+            }, 3000)
+        })
+
+        // Promise.all([promise1, promise2, promise3]).then((
+        //     value
+        // ) => {
+        //     console.log(value)
+        // }, (error) => {
+        //     console.error(error)
+        // })
+
+
+        Promise.race([promise1, promise2, promise3]).then((
+            value
+        ) => {
+            console.log(value)
+        }, (error) => {
+            console.error(error)
+        })
+    </script>
+</body>
+
+</html>
