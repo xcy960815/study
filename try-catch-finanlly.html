@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 同步代码的错误能够捕获
+        // try {
+        //     console.log(age)
+        // } catch (e) {
+        //     console.error(e)
+        // }
+        // 异步代码
+        // try {
+        //     Promise.reject("我是错误消息") //此错误消息 catch 捕获不到 
+        //     setTimeout(() => {
+        //         window.someNonexistentFunction()
+        //     }, 0)
+        // } catch (e) {
+        //     console.error("catch", e)
+        // }
+
+        // 调用一个win下面没有的方法 必然报错，
+        // try {
+        //     window.someNonexistentFunction(); //从报错行开始 就不再往下执行 不会输出 try 字符串
+        //     console.log('try')
+        // } catch (e) {
+        //     console.error(e, 'catch')
+        // } finally {
+        //     console.log('finally') //执行了finally
+        // }
+        // 在没有报错的情况下 执行了try 也执行了 finally 
+        // try {
+        //     console.log('try')
+        // } catch (e) {
+        //     console.log(e, 'catch')
+        // } finally {
+        //     console.log('finally')
+        // }
+        try {
+            window.someNonexistentFunction(); //从报错行开始 就不再往下执行 不会输出 try 字符串
+            console.log('try')
+        } catch (e) {
+            console.error(e, 'catch')
+        }
+        console.log(123)
+    </script>
+</body>
+
+</html>

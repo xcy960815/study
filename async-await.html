@@ -10,19 +10,61 @@
 
 <body>
     <script>
-        const getData = () => new Promise(resolve => setTimeout(() => resolve("data"), 1000))
+        // async await demo
+        // 自执行函数
+        // (async () => {
+        //     const a = await Promise.resolve("a");
+        //     console.log(a)
+        //     const b = await Promise.resolve("b");
+        //     console.log(a, b)
+        //     const c = await Promise.resolve("c");
+        //     console.log(a, b, c)
+        // })()
 
-        async function test() {
-            const data = await getData()
-            console.log('data: ', data);
-            const data2 = await getData()
-            console.log('data2: ', data2);
-            return 'success'
+
+        // 实际上 async await 就是 对generrator 的封装
+        // Generator 
+        // function* myGenerator() {
+        //     yield 'a'
+        //     yield 'b'
+        //     return 'c'
+        // }
+
+        // const gen = myGenerator();  // 获取迭代器
+        // console.log("gen", gen)
+        // const nextValue1 = gen.next()  //{value: "1", done: false}
+        // console.log("nextValue1", nextValue1)
+        // const nextValue2 = gen.next()  //{value: "2", done: false}
+        // console.log("nextValue2", nextValue2)
+        // const nextValue3 = gen.next()  //{value: "3", done: true}
+        // console.log("nextValue3", nextValue3)
+
+
+        // function* myGenerator() {
+        //     console.log(yield '1')  //test1
+        //     console.log(yield '2')  //test2
+        //     console.log(yield '3')  //test3
+        // }
+
+        // // 获取迭代器
+        // const gen = myGenerator();
+        // gen.next() //这里必须先执行一下
+        // gen.next('test1')
+        // gen.next('test2')
+        // gen.next('test3')
+
+
+        function* myGenerator() {
+            var _n = 1
+            var _v = yield _n + 11
+            console.log("_v---:", _v)
+            yield ++_n
+            yield ++_n
         }
-
-        // 这样的一个函数 应该再1秒后打印data 再过一秒打印data2 最后打印success
-        test().then(res => console.log(res))
-
+        var generator = myGenerator()
+        console.log(generator.next())
+        generator.next("_v_ ")
+        console.log(generator.next())
     </script>
 </body>
 
