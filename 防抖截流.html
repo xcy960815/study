@@ -22,7 +22,13 @@
 <body>
     <div class="scroll-box"></div>
     <script>
-        // 防抖
+        // 知识点延伸 闭包 能够访问外部变量的函数
+        // 防抖、截流函数 利用的就是 闭包  内部的函数访问外部函数的变量 让外部函数当中的变量常驻内存 
+        // 闭包优点：让变量不会被垃圾回收机制回收，长保存
+        // 闭包缺点:因为优点当中的变量不会被垃圾回收机制回收，过多的闭包占中大量内存，当达到一定的临界值的时候造成内存泄漏
+        // 闭包的使用场景 防抖截流
+
+        // 防抖截流实现
         const debounce = (callback, delay) => {
             delay = delay ? delay : 300
             let timer
@@ -67,7 +73,6 @@
             let previous = 0;
             const _this = this;
             return function () {
-
                 const args = arguments;
                 const now = new Date().getTime();
                 if (now - previous > delay) {

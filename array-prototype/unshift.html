@@ -32,35 +32,14 @@
             return array.length
 
         }
+
+        // demo
         const array = [5, 6, 7]
         const unshiftValue = array._unshift(1, 2, 3, 4)
         console.log(unshiftValue, array)
 
 
-        // 突发奇想关于this的问题
-        // const func1 = () => {
-        //     console.log("func1", this)
-        // }
-        // const func2 = function () {
-        //     console.log("func2", this)
-        // }
-        // const obj = {
-        //     func1,
-        //     func2,
-        //     func3: function () {
-        //         const func = () => {
-        //             console.log("this", this)
-        //         }
-        //         func()
-        //     },
-        //     func4: function () {
-        //         func1.apply(this)
-        //     }
-        // }
-        // obj.func1()
-        // obj.func2()
-        // obj.func3()
-        // obj.func4()
+
     </script>
 </body>
 
