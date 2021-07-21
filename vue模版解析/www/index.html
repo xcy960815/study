@@ -6,9 +6,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex
+        }
+
+        #original-templates,
+        #new-templates {
+            flex: 1;
+            /* hei */
+        }
+
+        pre {
+            /* outline: 1px solid #ccc; */
+            padding: 5px;
+            margin: 5px;
+            font-family: MONACO;
+        }
+
+        .string {
+            color: green;
+        }
+
+        .number {
+            color: darkorange;
+        }
+
+        .boolean {
+            color: blue;
+        }
+
+        .null {
+            color: magenta;
+        }
+
+        .key {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
+    <pre id="original-templates"></pre>
+    <pre id="new-templates"></pre>
     <script src="xuni/index.js"></script>
 </body>
 
