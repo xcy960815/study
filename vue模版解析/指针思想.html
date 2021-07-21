@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 寻找字符串中连续重复次数最多的字符
+        const str = 'aaaaaaaabbbbbbbbbbbbbbbbbcccccccccdddddd'
+        // 本题考验指针思想 
+        let startIndex = 0;
+        let endIndex = 0
+        let maxChart = ""
+        let maxCount = 0
+        while (startIndex < str.length) {
+            const startValue = str[startIndex]
+            const endValue = str[endIndex]
+            // 当 startValue 和 endValue不相等的时候就代表着 开始指针和结束指针指向的字符不一样了
+            if (startValue !== endValue) {
+                if (startIndex - endIndex > maxCount) {
+                    maxCount = startIndex - endIndex
+                    maxChart = str[startIndex - 1]
+
+                }
+                endIndex = startIndex
+            }
+            startIndex++
+        }
+        console.log(`出现次数最多的字符是${maxChart},出现了${maxCount}次`)
+
+    </script>
+</body>
+
+</html>

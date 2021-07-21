@@ -34,17 +34,19 @@ export default function updateChildren(parentElm, oldCh, newCh) {
             //不用处理节点不存在的情况
             oldEndVnode = oldCh[--oldEndIdx]
         } else if (sameNode(oldStartVnode, newStartVnode)) {
+            console.log('命中1这种情况')
             // 新前与旧前
             patchVNode(oldStartVnode, newStartVnode)
             oldStartVnode = oldCh[++oldStartIdx]
             newStartVnode = newCh[++newStartIdx]
         } else if (sameNode(oldEndVnode, newEndVnode)) {
+            console.log('命中2这种情况')
             // 新后与旧后
             patchVNode(oldEndVnode, newEndVnode)
             oldEndVnode = oldCh[--oldEndIdx]
             newEndVnode = newCh[--newEndIdx]
         } else if (sameNode(oldStartVnode, newEndVnode)) {
-            console.log('命中3⃣️这种情况')
+            console.log('命中3这种情况')
             // 新后与旧前
             patchVNode(oldStartVnode, newEndVnode)
             // 移动节点 新前节点移动到jiu hou
@@ -71,7 +73,7 @@ export default function updateChildren(parentElm, oldCh, newCh) {
                     }
                 }
             }
-            console.log('keyMap', keyMap)
+
             const idxInOld = keyMap[newStartVnode.key]
 
             if (idxInOld === undefined) {

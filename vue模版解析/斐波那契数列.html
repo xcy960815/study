@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 用递归的方法输出斐波那契数列前 10 项
+        //规则 n=n-1+n-2
+        const fibonacci = (n) => {
+            return n === 0 || n === 1 ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
+        }
+        for (let index = 0; index <= 10; index++) {
+            const result = fibonacci(index)
+            console.log("result: " + result);
+        }
+
+    </script>
+</body>
+
+</html>

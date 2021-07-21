@@ -6,14 +6,13 @@ import { eventListenersModule } from 'snabbdom/modules/eventlisteners'
 // import { h } from 'snabbdom/h' // helper function for creating vnodes
 import h from './vnode/h.js' // helper function for creating vnodes
 
-import patch from './vnode/patch.js'
-// const patch = init([
-//     classModule,
-//     propsModule,
-//     styleModule,
-//     eventListenersModule,
-// ])
-// console.log('patch', patch)
+// import patch from './vnode/patch.js'
+const patch = init([
+    classModule,
+    propsModule,
+    styleModule,
+    eventListenersModule,
+])
 const container = document.getElementById('container')
 const btn = document.getElementById('btn')
 const ulNode = h('ul', { key: 'ul' }, [
