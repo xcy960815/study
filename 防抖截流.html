@@ -28,7 +28,8 @@
         // 闭包缺点:因为优点当中的变量不会被垃圾回收机制回收，过多的闭包占中大量内存，当达到一定的临界值的时候造成内存泄漏
         // 闭包的使用场景 防抖截流
 
-        // 防抖截流实现
+        // 防抖
+
         const debounce = (callback, delay) => {
             delay = delay ? delay : 300
             let timer
@@ -67,6 +68,8 @@
         //         }, delay)
         //     }
         // }
+
+
         // 截流 时间戳
         const throttle = (fn, delay) => {
             // 使用闭包返回一个函数并且用到闭包函数外面的变量previous
