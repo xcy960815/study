@@ -19,7 +19,7 @@
             delete context[functionKey]; // 执行后删除新增属性
             return result;
         }
-        // apply的实现远离
+        // apply的实现原理
         Function.prototype.myApply = function (context, args = []) {
             context = context || window;
             const functionKey = Symbol("functionKey")

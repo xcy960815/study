@@ -21,7 +21,7 @@ export default function (templateString) {
         // console.log('restTemplate', restTemplate)
         // 思路：识别当前剩余字符串的开头位置
         // 1、遇到开始标签 就进栈
-        // 2、遇到结束标签就
+        // 2、遇到结束标签就出栈
         if (startRegExp.test(restTemplate)) {
             // 标签
             const startTag = restTemplate.match(startRegExp)[1]

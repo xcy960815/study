@@ -25,7 +25,6 @@
             }
 
             resolve(value) {
-
                 if (this.status == "pending") {
                     this.status = "resolve"
                     this.resolveValue = value
@@ -34,6 +33,7 @@
             }
 
             reject(value) {
+                console.log("reject");
                 if (this.status == "pending") {
                     this.status = "reject"
                     this.rejectValue = value
@@ -117,20 +117,22 @@
             setTimeout(() => {
                 resolve("成功了-2000")
             }, 2000)
+        }).then(res => {
+            console.log(res)
         })
 
 
-        const promise2 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve("成功了-1000")
-            }, 1000)
-        })
+        // const promise2 = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve("成功了-1000")
+        //     }, 1000)
+        // })
 
-        const promise3 = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve("成功了-3000")
-            }, 3000)
-        })
+        // const promise3 = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve("成功了-3000")
+        //     }, 3000)
+        // })
 
 
 
@@ -140,12 +142,13 @@
         //     console.log("Promise.all-error", error)
         // })
 
-        Promise.race([promise1, promise2, promise3])
-            .then(res => {
-                console.log("promise-race-success", res)
-            }, err => {
-                console.log("promise-race-error", err)
-            })
+
+        // Promise.race([promise1, promise2, promise3])
+        //     .then(res => {
+        //         console.log("promise-race-success", res)
+        //     }, err => {
+        //         console.log("åpromise-race-error", err)
+        //     })
 
 
     </script>

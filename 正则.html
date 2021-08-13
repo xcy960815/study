@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+
+        //  * 文章地址 
+        //  * https://juejin.cn/post/6844903487155732494#heading-1
+
+        // 精准匹配
+        // const reg = /hello/g
+        // const str = "hello-hello"
+        // console.log(str.replace(reg, "haha"));
+
+        //  横向模糊匹配 匹配个数
+        // var regex = /ab{2,5}c/g;
+        // var string = "abc abbc abbbc abbbbc abbbbbc abbbbbbc";
+        // console.log(string.match(regex));
+        // => ["abbc", "abbbc", "abbbbc", "abbbbbc"]
+
+
+        //  纵向模糊匹配 匹配字符
+        var regex = /a[^]b/g;
+        var string = "a0b a1b a2b a3b a4b";
+        console.log(string.match(regex));
+        // => ["a1b", "a2b", "a3b"]
+
+        // 范围匹配
+        // var regex = /a[a\-\z]b/g  //[-az]或[az-]或[a\-z]
+        // var string = "aab a-b azb ";
+        // console.log(string.match(regex));
+
+
+        // 范围取非 
+        // \d就是[0 - 9]。表示是一位数字。记忆方式：其英文是digit（数字）。
+        // \D就是[^ 0 - 9]。表示除数字外的任意字符。
+        // \w就是[0 - 9a - zA - Z_]。表示数字、大小写字母和下划线。记忆方式：w是word的简写，也称单词字符。
+        // \W是[^ 0 - 9a - zA - Z_]。非单词字符。
+        // \s是[\t\v\n\r\f]。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页符。记忆方式：s是space character的首字母。
+        // \S是[^ \t\v\n\r\f]。 非空白符。.就是[^\n\r\u2028\u2029]。通配符，表示几乎任意字符。换行符、回车符、行分隔符和段分隔符除外。记忆方式：想想省略号...中的每个点，都可以理解成占位符，表示任何类似的东西。
+        // 如果要匹配任意字符可以使用[\d\D]、[\w\W]、[\s\S]和[^]中任何的一个
+
+
+        // var regex1 = /a[\D]b/g
+        // var string1 = "aab a-1b az1b a1b";
+        // console.log(string1.match(regex1));
+
+        // var regex2 = /a[\d]b/g
+        // var string2 = "aab a-1b a_1b a1b";
+        // console.log(string2.match(regex2));
+
+        // var regex3 = /a[\w]b/g
+        // var string3 = "aab a__b azb a1b";
+        // console.log(string3.match(regex3));
+
+
+        // var regex4 = /a[\W]b/g
+        // var string4 = "a-b a_b azb a1b";
+        // console.log(string4.match(regex4));
+
+        // var regex5 = /a[\S]b/g
+        // var string5 = `a b a_b azb a1b`;
+        // console.log(string5.match(regex5));
+
+
+        // {m,} 表示至少出现m次。{m} 等价于{m,m}，表示出现m次。
+        // ? 等价于{0,1}，表示出现或者不出现。记忆方式：问号的意思表示，有吗？
+        // + 等价于{1,}，表示出现至少一次。记忆方式：加号是追加的意思，得先有一个，然后才考虑追加。
+        // * 等价于{0,}，表示出现任意次，有可能不出现。记忆方式：看看天上的星星，可能一颗没有，可能零散有几颗，可能数也数不过来。
+
+
+        // var regex6 = /ab{1,}/g
+        // var string6 = `ac ab abb abbb abbbb`;
+        // console.log(string6.match(regex6));
+
+        // var regex7 = /\w{1,2}/g
+        // var string7 = "ac ab abb abbb abbbb";
+        // console.log(string7.match(regex7));
+
+        // 贪婪匹配（多）
+        // var regex8 = /\d{2,5}/g;
+        // var string8 = "123 1234 12345 123456"; //其实123456 是不需要的 多了一个12345
+        // console.log(string8.match(regex8));
+        // 惰性匹配
+        // var regex9 = /\d{2,5}?/g;
+        // var string9 = "123 1234 12345 123456"; //其实123456 是不需要的 多了一个12345
+        // console.log(string9.match(regex9));
+
+        // var regex = /id="(.+?)"/
+        // var string = '<div id="container" class="main"></div>';
+        // console.log(string.match(regex));
+
+        // var result = "hello".replace(/^|$/g, '#');
+        // console.log(result);
+        // => "#hello#"
+
+        // var result = "I\nlove\njavascript".replace(/^|$/gm, '#');
+        // console.log(result);
+        /*
+            #I#
+            #love#
+            #javascript#
+        */
+
+        // var result = "hello".replace(/(?<!o)/g, '#');
+
+        // console.log(result);
+        // var regex = /(\d{4})-(\d{2})-(\d{2})/;
+        // var string = "2017-06-12";
+        // console.log(string.match(regex));
+        // console.log(regex.exec(string));
+        // => ["2017-06-12", "2017", "06", "12", index: 0, input: "2017-06-12"]
+        // var regex = /\d{4}(-|\/|\.)\d{2}\1\d{2}/;
+        // var string1 = "2017-06-12";
+        // var string2 = "2017/06/12";
+        // var string3 = "2017.06.12";
+        // var string4 = "2016-06/12";
+        // console.log(regex.test(string1)); // true
+        // console.log(regex.test(string2)); // true
+        // console.log(regex.test(string3)); // true
+        // console.log(regex.test(string4)); // false
+
+
+
+    </script>
+</body>
+
+</html>
