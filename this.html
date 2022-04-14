@@ -11,19 +11,22 @@
 <body>
     <script>
         // 突发奇想关于this的问题
-        // this 通常来说 谁调用这个方法 这个方法当中的this 就 指向谁 
-        // 通常是说 function函数  箭头函数的this 会向上查找 直到查到第一个不会箭头函数的作用域 的this 就是当前箭头函数的this指向
+        // this 通常来说 谁调用这个方法 这个方法当中的this 就 指向谁  通常是说 function函数
+        // 箭头函数的this 会向上查找 直到查到第一个不是箭头函数的作用域 的this 就是当前箭头函数的this指向
         // 另外箭头函数的作用域 一旦被声明 就不会在发生改变
 
-        const func1 = () => {
-            console.log("func1", this)
+        const func7 = () => {
+            console.log("func7", this)
         }
-        const func2 = function () {
-            console.log("func2", this)
+        const func8 = function () {
+            console.log("func8", this)
         }
+
+
+
         const obj = {
-            func1,
-            func2,
+            func1: func7,
+            func2: func8,
             func3: function () {
                 const func = () => {
                     console.log("func3", this)
@@ -31,7 +34,8 @@
                 func()
             },
             func4: function () {
-                func1.apply("func4", this)
+                // func7.apply(this)
+                // func8.apply(this)
             },
             func5() {
                 console.log("func5", this)
@@ -40,12 +44,16 @@
                 console.log("func6", this)
             }
         }
-        obj.func1()
-        obj.func2()
-        obj.func3()
-        obj.func4()
-        obj.func5()
-        obj.func6()
+        // func7()
+        // func8()
+        // obj.func1()
+        // obj.func2()
+        // obj.func3()
+        // obj.func4()
+        // obj.func5()
+        // obj.func6()
+        // window.obj.func1()
+
     </script>
 </body>
 
