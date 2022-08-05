@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .warp {
+            width: 280px;
+            height: 280px;
+            background-color: pink;
+            position: relative;
+            border-bottom-right-radius: 35px;
+            box-shadow: 7px 7px 5px #888888;
+            z-index: 20;
+        }
+
+        .warp::after {
+            display: block;
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 30px;
+            width: 30px;
+            background-color: #ccc;
+            border-bottom-right-radius: 6px;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="warp">
+
+    </div>
+</body>
+
+</html>

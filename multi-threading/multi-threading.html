@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多线程</title>
+</head>
+
+<body>
+    <input type="text" placeholder="输入内容">
+    <button class="web-worker-button">使用webworker</button>
+    <script>
+        if (window.Worker) {
+            const worker = new Worker("worker.js");
+            worker.onmessage = function (event) {
+                console.log('total', event);
+            }
+            document.querySelector(".web-worker-button").addEventListener("click", function () {
+                worker.postMessage('total');
+                // worker.terminate();
+            })
+
+        }
+    </script>
+</body>
+
+</html>

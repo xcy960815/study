@@ -29,31 +29,65 @@
         // 闭包的使用场景 防抖截流
 
         // 防抖
-
-        const debounce = (callback, delay) => {
-            delay = delay ? delay : 300
-            let timer
-            return function () {
-                const _this = this
+        // const debounce = function (callback, delay) {
+        //     console.log(this);
+        //     delay = delay ? delay : 300
+        //     let timer
+        //     return function () {
+        //         const _this = this
+        //         if (timer) {
+        //             window.clearTimeout(timer)
+        //         }
+        //         timer = setTimeout(() => {
+        //             callback.apply(_this, arguments)
+        //         }, delay)
+        //     }
+        // }
+        function debounce(fn, delay = 500, immediate) {
+            let timer = null
+            return function (...args) {
+                const that = this
                 if (timer) {
-                    window.clearTimeout(timer)
+                    clearTimeout(timer)    //直接清除定时器（关键）
+                    timer = null
                 }
-                timer = setTimeout(() => {
-                    callback.apply(_this, arguments)
-                }, delay)
+                if (immediate) {
+                    let rightNow = !timer
+                    timer = setTimeout(() => {
+                        timer = null
+                    }, delay)
+                    if (rightNow) {
+                        fn.apply(that, args)
+                    }
+                } else {
+                    timer = setTimeout(() => {
+                        fn.apply(that, args)
+                    }, delay)
+                }
             }
         }
-        const showTop = function (params) {
-            const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-            console.log('滚动条位置：' + scrollTop);
+        // const showTop = function (params) {
+        //     const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        //     console.log('滚动条位置：' + scrollTop);
+        // }
+        // const debounceFunc = debounce(showTop, 500)
 
+        // window.onscroll = function (event) {
+        //     debounceFunc(event)
+        // }
+
+        const option = {
+            name: "optoin",
+            debounceGetName() {
+                // console.log(this);
+                debounce(this.getName, 300, true)
+            },
+            getName() {
+                console.log(this);
+            }
         }
-        const debounceFunc = debounce(showTop, 500)
-
-        window.onscroll = function (event) {
-            debounceFunc(event)
-
-        }
+        option.debounceGetName()
+        option.debounceGetName()
 
         // 截流 setTime
         // const throttle = (fn, delay) => {
@@ -84,13 +118,13 @@
                 }
             }
         }
-        function testThrottle(e, content) {
-            console.log(e, content);
-        }
-        const testThrottleFn = throttle(testThrottle, 300); // 节流函数
-        document.onmousemove = function (e) {
-            testThrottleFn(e, 'throttle'); // 给节流函数传参
-        }
+        // function testThrottle(e, content) {
+        //     console.log(e, content);
+        // }
+        // const testThrottleFn = throttle(testThrottle, 300); // 节流函数
+        // document.onmousemove = function (e) {
+        //     testThrottleFn(e, 'throttle'); // 给节流函数传参
+        // }
     </script>
 </body>
 
