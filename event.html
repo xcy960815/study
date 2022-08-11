@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+        .scroll-element {
+            height: 1000px;
+            background-color: aqua;
+        }
+
+        .buttons {
+            position: sticky;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buttons">
+        <button onclick="handleAddScrollEvent()">添加滚动事件</button>
+        <button onclick="handleRemoveScrollEvent()">移除滚动事件</button>
+        <button onclick="handleAddResizeEvent()">添加resize事件</button>
+        <button onclick="handleRemoveResizeEvent()">移除resize事件</button>
+    </div>
+    <div class="scroll-element"></div>
+    <script>
+        const eventListener = (eventType) => {
+            console.log(
+                `%c正在执行 %c${eventType}`,
+                'color: blue', 'color: red'
+            );
+        }
+        // 添加滚动事件
+        const handleAddScrollEvent = () => {
+            const scrollElement = document.body
+            scrollElement.addEventListener('scroll', () => eventListener("滚动事件"))
+        }
+        // 移除滚动事件
+        const handleRemoveScrollEvent = () => {
+            const scrollElement = document.body
+            scrollElement.removeEventListener('scroll', eventListener)
+        }
+        // 添加resize事件
+        const handleAddResizeEvent = () => {
+            window.onresize = () => {
+                eventListener('resize事件')
+            }
+        }
+        // 移除resize事件
+        const handleRemoveResizeEvent = () => {
+            window.onresize = null
+        }
+    </script>
+</body>
+
+</html>
