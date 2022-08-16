@@ -10,6 +10,8 @@
 
 <body>
     <script>
+        // Object.keys(obj) ： 结果是object 上所有可枚举的key;
+        // Reflect.ownKeys(obj) : 结果是所有的 key。
         const obj = {
             a: {
                 b: "ccc"
@@ -26,6 +28,7 @@
         const { [Reflect.ownKeys(key)]: dynamic } = (({
             [Reflect.ownKeys(test)]: key,
         } = test), key);
+
         console.log(dynamic);
     </script>
 </body>

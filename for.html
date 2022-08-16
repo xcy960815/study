@@ -11,12 +11,11 @@
 <body>
     <script>
         //举例：
-
+        const array = [1, 2, 3, 4]
         // 1、
         // while 循环
         // while (条件) 语句;
         // let i = 0;
-        // const array = [1, 2, 3, 4]
         // while (i < array.length) {
         //     const value = array[i]
         //     console.log('i 当前为：' + i, "value当前为：", value);
@@ -25,11 +24,10 @@
 
         // 2、
         // do……while循环
-        // do { 
-        // 语句 
+        // do {
+        // 语句
         // } while (条件);
         // let i = 0;
-        // const array = [1, 2, 3, 4]
         // do {
         //     const value = array[i]
         //     console.log('i 当前为：' + i, "value当前为：", value);
@@ -38,28 +36,24 @@
 
         // 3
         // for 循环
-        // const array = [1, 2, 3, 4]
-        // let i = 0
-        // for (i; i < array.length; i++) {
+        // for (let i = 0; i < array.length; i++) {
         //     const value = array[i]
         //     console.log('i 当前为：' + i, "value当前为：", value);
         // }
 
         // 4、
         // for in 通常用来循环对象  也可以用来循环数组
-        const array = [1, 2, 3, 4]
-        array.name = "test-array"
         for (const key in array) {
             // 尝试循环数组
             console.log(key) //0、1、2、3
-            // 如果给array添加了name属性 for in 循环 将name属性也会循环出来 
+            // 如果给array添加了name属性 for in 循环 将name属性也会循环出来
             // 后来es6添加了 for of 循环
             // for of 循环不能直接循环 对象 需要和Object.keys搭配使用
         }
-        // for (const value of array) {
-        //     // 尝试循环数组
-        //     console.log(value) // 1、2、3、4
-        // }
+        for (const value of array) {
+            // 尝试循环数组
+            console.log(value) // 1、2、3、4
+        }
         // const object = { a: "a", b: "b", c: "c", d: "d" }
         // for (const key in object) {
         //     console.log(key) //a、b、c、d
@@ -68,27 +62,26 @@
         //     console.log(value) //错误 for of循环不能直接循环对象
         // }
 
-        // const student = {
-        //     name: 'xiaoming',
-        //     age: 22,
-        //     locate: {
-        //         country: 'china',
-        //         city: 'xiamen',
-        //         school: 'XMUT'
-        //     }
-        // }
+        const student = {
+            name: 'xiaoming',
+            age: 22,
+            locate: {
+                country: 'china',
+                city: 'xiamen',
+                school: 'XMUT'
+            }
+        }
         // 总结： for of 要是循环对象的话 需要配合Object.keys 使用
-        // for (const key of Object.keys(student)) {
-        //     const value = student[key]
-        //     //使用Object.keys()方法获取对象key的数组
-        //     console.log(key, ":", value);
-        // }
+        for (const key of Object.keys(student)) {
+            const value = student[key]
+            //使用Object.keys()方法获取对象key的数组
+            console.log(key, ":", value);
+        }
 
         // 总结：
-        // for in for of区别 for in 是用来循环key的 for of 是用来循环 key值的 
+        // for in for of区别 for in 是用来循环key的 for of 是用来循环 key值的
         // for in 是es5 出现的方法  for of 是es6出现的方法
         // for of 的出现是弥补for in 不足的 就像刚才在数组上添加一个自定义属性 for in 也能将数组添加的自定义属性 循环出来
-
 
     </script>
 </body>

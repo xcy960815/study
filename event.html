@@ -35,6 +35,8 @@
         <button onclick="handleRemoveScrollEvent()">移除滚动事件</button>
         <button onclick="handleAddResizeEvent()">添加resize事件</button>
         <button onclick="handleRemoveResizeEvent()">移除resize事件</button>
+        <button onclick="handleAddClickEvent()">添加点击事件</button>
+        <div class="event-element" style="width: 100px;height: 100px;background-color: red;"></div>
     </div>
     <div class="scroll-element"></div>
     <script>
@@ -63,6 +65,15 @@
         // 移除resize事件
         const handleRemoveResizeEvent = () => {
             window.onresize = null
+        }
+        // 添加点击事件
+        const handleAddClickEvent = () => {
+            document.querySelector(".event-element").addEventListener("click", () => {
+                console.log(
+                    `%c正在执行 %c点击事件`,
+                    'color: blue', 'color: red'
+                );
+            })
         }
     </script>
 </body>

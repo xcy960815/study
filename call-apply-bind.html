@@ -10,26 +10,26 @@
 
 <body>
     <script>
-        // call 实现远离
+        // call 实现原理
         Function.prototype.myCall = function (context, ...args) {
-            context = context || window;
             const functionKey = Symbol("functionKey")
             context[functionKey] = this; // this是调用call的函数
             const result = context[functionKey](...args);
             delete context[functionKey]; // 执行后删除新增属性
             return result;
         }
-        // apply的实现原理
-        Function.prototype.myApply = function (context, args = []) {
-            context = context || window;
-            const functionKey = Symbol("functionKey")
-            context[functionKey] = this; // this是调用call的函数
-            const result = context[functionKey](...args);
-            delete context[functionKey]; // 执行后删除新增属性
-            return result;
-        }
-        // bind 返回一个新的函数
 
+        // apply 实现原理
+        Function.prototype.myApply = function (context, args) {
+            context = context || window;
+            const functionKey = Symbol("functionKey")
+            context[functionKey] = this; // this是调用call的函数
+            const result = context[functionKey](args);
+            delete context[functionKey]; // 执行后删除新增属性
+            return result;
+        }
+
+        // bind 返回一个新的函数
         Function.prototype.myBind = function (context, ...args) {
             const _this = this;
             return function Bind(...newArgs) {
@@ -42,15 +42,15 @@
         }
 
         const obj = {
-            name: "xuchongyu"
+            name: "test-test"
         }
         function shayName() {
             console.log(this.name)
         }
 
 
-        // shayName.myCall(obj, 1, 2)
-        // shayName.myApply(obj, [1, 2])
+        shayName.myCall(obj, { 1: "1", 2: "2" })
+        shayName.myApply(obj, [1, 2])
         shayName.myBind(obj, [1, 2])()
 
     </script>
