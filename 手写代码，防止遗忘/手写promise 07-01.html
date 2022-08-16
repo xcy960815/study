@@ -10,8 +10,6 @@
 
 <body>
     <script>
-
-
         class Promise {
             resolveCallbacks = []
             rejectCallbacks = []
@@ -122,17 +120,17 @@
         })
 
 
-        // const promise2 = new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //         resolve("成功了-1000")
-        //     }, 1000)
-        // })
+        const promise2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-1000")
+            }, 1000)
+        })
 
-        // const promise3 = new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //         resolve("成功了-3000")
-        //     }, 3000)
-        // })
+        const promise3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("成功了-3000")
+            }, 3000)
+        })
 
 
 
