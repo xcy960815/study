@@ -23,7 +23,7 @@
 
 
         // 实际上 async await 就是 对generrator 的封装
-        // Generator 
+        // Generator
         // function* myGenerator() {
         //     yield 'a'
         //     yield 'b'
@@ -54,17 +54,18 @@
         // gen.next('test3')
 
 
-        function* myGenerator() {
-            var _n = 1
-            var _v = yield _n + 11
-            console.log("_v---:", _v)
-            yield ++_n
-            yield ++_n
-        }
-        var generator = myGenerator()
-        console.log(generator.next())
-        generator.next("_v_ ")
-        console.log(generator.next())
+        // function* myGenerator() {
+        //     var _n = 1
+        //     var _v = yield _n + 11
+        //     console.log("_v---:", _v)
+        //     yield ++_n
+        //     yield ++_n
+        // }
+        // var generator = myGenerator()
+        // console.log(generator.next())
+        // generator.next("_v_ ")
+        // console.log(generator.next())
+
     </script>
 </body>
 
