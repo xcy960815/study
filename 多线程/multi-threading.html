@@ -11,6 +11,7 @@
 <body>
     <input type="text" placeholder="输入内容">
     <button class="web-worker-button">使用webworker</button>
+    <!-- <button class="web-worker-button">不使用webworker</button> -->
     <script>
         if (window.Worker) {
             const worker = new Worker("worker.js");
@@ -21,8 +22,18 @@
                 worker.postMessage('total');
                 // worker.terminate();
             })
-
         }
+        // console.log(this);
+
+        // document.querySelector(".web-worker-button").addEventListener("click", function () {
+        //     let total = 1;
+        //     for (let i = 0; i < 5000000000; i++) {
+        //         console.log(i);
+        //         total += i;
+        //     }
+        // })
+
+
     </script>
 </body>
 
