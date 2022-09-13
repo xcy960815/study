@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntersectionObserver</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .scroll-element {
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height: 500px;background-color: greenyellow;"></div>
+    <div class="scroll-element"></div>
+    <script>
+        const scrollElement = document.querySelector(".scroll-element");
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(item => {
+                if (item.isIntersecting) {
+                    console.log("intersecting");
+                } else {
+                    console.log("not intersecting");
+                }
+            }, {
+                rootMargin: "-50px 0px 0px 0px" // 交叉过视图的100，才开始派发事件
+            });
+        });
+        observer.observe(scrollElement);
+    </script>
+</body>
+
+</html>

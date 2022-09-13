@@ -1,5 +1,6 @@
-import createElement from './createElement'
-import updateChildren from './updateChildren'
+import createElement from './create-element'
+import updateChildren from './update-children'
+
 export default function (oldVNode, newVNode) {
     // 判断新旧vnode是否是同一个对象
     if (oldVNode === newVNode) return

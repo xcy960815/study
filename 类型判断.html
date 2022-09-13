@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        const stringParma = '123'
+        const numberParma = 123
+        const booleanParma = true
+        const nullParma = null
+        const undefinedParma = undefined
+        const objectParma = { name: '123' }
+        const arrayParma = [1, 2, 3]
+        const functionParma = function () { }
+        const symbolParma = Symbol('123')
+        const dateParma = new Date()
+        const errorParma = new Error()
+        const regParma = /123/
+        const mathParma = Math
+        const jsonParma = JSON
+        // typeof
+        console.log('typeof', typeof stringParma)
+        console.log('typeof', typeof numberParma)
+        console.log('typeof', typeof booleanParma)
+        console.log('typeof', typeof nullParma)
+        console.log('typeof', typeof undefinedParma)
+        console.log('typeof', typeof objectParma)
+        console.log('typeof', typeof arrayParma)
+        console.log('typeof', typeof functionParma)
+        console.log('typeof', typeof symbolParma)
+        console.log('typeof', typeof dateParma)
+        console.log('typeof', typeof errorParma)
+        console.log('typeof', typeof regParma)
+        console.log('typeof', typeof mathParma)
+        console.log('typeof', typeof jsonParma)
+
+        // Object.prototype.toString.call
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(stringParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(numberParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(booleanParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(nullParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(undefinedParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(objectParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(arrayParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(functionParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(symbolParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(dateParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(errorParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(regParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(mathParma))
+        console.log('Object.prototype.toString.call', Object.prototype.toString.call(jsonParma))
+
+        // instanceof
+        console.log('instanceof', stringParma instanceof String)
+        console.log('instanceof', numberParma instanceof Number)
+        console.log('instanceof', booleanParma instanceof Boolean)
+        // console.log('instanceof', nullParma instanceof Null)
+        // console.log('instanceof', undefinedParma instanceof Undefined)
+        console.log('instanceof', objectParma instanceof Object)
+        console.log('instanceof', arrayParma instanceof Array)
+        console.log('instanceof', functionParma instanceof Function)
+        console.log('instanceof', symbolParma instanceof Symbol)
+        console.log('instanceof', dateParma instanceof Date)
+        console.log('instanceof', errorParma instanceof Error)
+        console.log('instanceof', regParma instanceof RegExp)
+        // console.log('instanceof', mathParma instanceof Math)
+        // console.log('instanceof', jsonParma instanceof JSON)
+
+
+        // constructor
+        console.log('constructor', stringParma.constructor === String)
+        console.log('constructor', numberParma.constructor === Number)
+        console.log('constructor', booleanParma.constructor === Boolean)
+        console.log('constructor', nullParma.constructor === Null)
+        // console.log('constructor', undefinedParma.constructor === Undefined)
+        console.log('constructor', objectParma.constructor === Object)
+        console.log('constructor', arrayParma.constructor === Array)
+        console.log('constructor', functionParma.constructor === Function)
+        console.log('constructor', symbolParma.constructor === Symbol)
+        console.log('constructor', dateParma.constructor === Date)
+        console.log('constructor', errorParma.constructor === Error)
+        console.log('constructor', regParma.constructor === RegExp)
+        // console.log('constructor', mathParma.constructor === Math)
+        // console.log('constructor', jsonParma.constructor === JSON)
+
+        // Object.prototype.isPrototypeOf
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(stringParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(numberParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(booleanParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(nullParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(undefinedParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(objectParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(arrayParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(functionParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(symbolParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(dateParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(errorParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(regParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(mathParma))
+        console.log('Object.prototype.isPrototypeOf', Object.prototype.isPrototypeOf(jsonParma))
+
+        // Object.prototype.hasOwnProperty
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(stringParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(numberParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(booleanParma, 'length'))
+        // console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(nullParma, 'length'))
+        // console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(undefinedParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(objectParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(arrayParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(functionParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(symbolParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(dateParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(errorParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(regParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(mathParma, 'length'))
+        console.log('Object.prototype.hasOwnProperty', Object.prototype.hasOwnProperty.call(jsonParma, 'length'))
+
+
+    </script>
+</body>
+
+</html>
